@@ -21,7 +21,8 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ### 2. Start Minikube with Docker driver
 
 ```bash
-minikube start --driver=docker
+minikube start --driver=docker --nodes 2
+
 ```
 
 ### 3. Verify the installation
