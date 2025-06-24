@@ -180,6 +180,64 @@ kubectl port-forward svc/monitoring-kube-prometheus-alertmanager 9093:9093 -n mo
 
 ---
 
+To go **inside the Minikube nodes**, you can use the `minikube ssh` command.
+
+---
+
+## ✅ Accessing Minikube Nodes
+
+### 🔹 1. **Go into the Control Plane Node**
+
+```bash
+minikube ssh
+```
+
+This defaults to the **primary control-plane node**.
+
+---
+
+### 🔹 2. **Go into a Specific Node (e.g., worker)**
+
+First, list all nodes:
+
+```bash
+kubectl get nodes
+```
+
+You’ll see:
+
+```
+NAME           STATUS   ROLES           AGE     VERSION
+minikube       Ready    control-plane   1h      v1.33.1
+minikube-m02   Ready    <none>          10m     v1.33.1
+```
+
+Then SSH into a specific node like this:
+
+```bash
+minikube ssh -n minikube-m02
+```
+
+> Use the `-n` or `--node` flag to specify the node name.
+
+---
+
+## 🔙 Exit the Node
+
+Once inside a node (you'll get a Linux shell), to exit:
+
+```bash
+exit
+```
+
+---
+
+Let me know if you want to:
+
+* Copy files into the node
+* Run Docker inside the node (Minikube supports `docker` natively)
+
+
 ## 🧹 **Part 5: Cleanup Commands**
 
 ### ✅ Stop Minikube (pause state)
