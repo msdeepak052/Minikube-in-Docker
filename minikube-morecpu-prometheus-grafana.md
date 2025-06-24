@@ -197,5 +197,3 @@ minikube delete
 This will remove all nodes, configurations, and containers.
 
 ---
-
-Would you like this saved as a `.sh` script or Markdown file too?
