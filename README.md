@@ -80,6 +80,72 @@ minikube status
 kubectl version
 ```
 
+Yes, the message explains it clearly:
+
+> ❗  You cannot change the number of nodes for an **existing** minikube cluster. Please use `minikube node add` to add nodes to an existing cluster.
+
+You're trying to add nodes using `minikube start --nodes 2`, **but you're reusing an existing cluster**, so that flag has no effect.
+
+---
+
+## ✅ How to Add a Worker Node to Existing Minikube Cluster
+
+You can add a node using:
+
+```bash
+minikube node add
+```
+
+This will prompt you for the node type (`worker` or `control-plane`). Select `worker`.
+
+---
+
+### 🧪 Try This:
+
+```bash
+minikube node add
+```
+
+**Sample interaction:**
+
+```
+👉  Select the node role you want to add:
+    1: control-plane
+    2: worker
+```
+
+Choose `2` for **worker**.
+
+After it completes, run:
+
+```bash
+kubectl get nodes
+```
+
+You should see:
+
+```
+minikube        Ready   control-plane   ...
+minikube-m02    Ready   <none>          ...
+```
+
+---
+
+## 💡 Optional Cleanup (if needed)
+
+If you want to **start fresh** with multiple nodes:
+
+```bash
+minikube delete
+minikube start --nodes 2
+```
+
+This will create a new 2-node cluster from scratch.
+
+---
+
+
+
 ## Step 3: Create an Nginx Pod
 
 1. **Create a deployment**:
