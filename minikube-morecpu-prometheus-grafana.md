@@ -1,3 +1,5 @@
+# Minikube with 2 nodes - Kubernetes
+
 Here is a complete, step-by-step guide for setting up **Minikube with 2 nodes**, **Helm**, and installing **Prometheus + Grafana**, including WSL configuration, port forwarding, and cleanup.
 
 ---
