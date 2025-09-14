@@ -74,6 +74,8 @@ Verify:
 kubectl get nodes
 ```
 
+## ⚡ Quick note: Every time you restart your system, the Minikube cluster is not running automatically. You must run minikube start again to bring it up.
+
 ---
 
 ## 🧱 **Part 2: Install Helm**
