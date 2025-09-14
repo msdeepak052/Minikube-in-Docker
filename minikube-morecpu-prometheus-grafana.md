@@ -78,6 +78,106 @@ kubectl get nodes
 ---
 > **⚡ Quick note:** Every time you restart your system, the Minikube cluster is not running automatically. You must run `minikube start` again to bring it up.
 
+> You can make Minikube start automatically every time you launch Ubuntu in **WSL**.
+> There are a couple of ways to do this depending on how you prefer to manage it:
+
+---
+
+## 🔹 Option 1: Add `minikube start` to `.bashrc` (runs every time you open a shell)
+
+1. Open your `.bashrc`:
+
+   ```bash
+   nano ~/.bashrc
+   ```
+
+2. Add this at the bottom:
+
+   ```bash
+   # Auto-start Minikube when WSL Ubuntu launches
+   if command -v minikube >/dev/null 2>&1; then
+       minikube status >/dev/null 2>&1 || minikube start --driver=docker
+   fi
+   ```
+
+   > This will only start Minikube if it’s **not already running**.
+
+3. Save & exit (`CTRL+O`, `CTRL+X`).
+
+4. Reload bash:
+
+   ```bash
+   source ~/.bashrc
+   ```
+
+---
+
+## 🔹 Option 2: Use WSL startup commands (recommended, cleaner)
+
+You can configure **Windows to run a command automatically when WSL Ubuntu starts**.
+
+1. In **Windows**, open:
+
+   ```
+   C:\Users\<YourUser>\.wslconfig
+   ```
+
+   (Create it if it doesn’t exist.)
+
+2. Add this section:
+
+   ```ini
+   [boot]
+   command="wsl -d Ubuntu --exec bash -lc 'minikube status >/dev/null 2>&1 || minikube start --driver=docker'"
+   ```
+
+   * Replace `Ubuntu` with your WSL distro name (`wsl -l -v` to check).
+
+3. Restart WSL:
+
+   ```powershell
+   wsl --shutdown
+   wsl
+   ```
+
+Now, every time Ubuntu starts in WSL, it will auto-run `minikube start`.
+
+---
+
+## 🔹 Option 3: Systemd service (if your WSL has systemd enabled)
+
+Since newer WSL supports **systemd**, you can create a service for Minikube.
+
+1. Create a systemd service:
+
+   ```bash
+   sudo nano /etc/systemd/system/minikube.service
+   ```
+2. Add:
+
+   ```ini
+   [Unit]
+   Description=Start Minikube on WSL boot
+   After=network.target docker.service
+
+   [Service]
+   ExecStart=/usr/bin/minikube start --driver=docker
+   ExecStop=/usr/bin/minikube stop
+   Restart=always
+   User=deepak
+
+   [Install]
+   WantedBy=default.target
+   ```
+3. Enable & start:
+
+   ```bash
+   sudo systemctl enable minikube --now
+   ```
+
+---
+
+👉 Recommended for you: **Option 2 (wslconfig)** because it’s clean and doesn’t run `minikube start` every time you just open a new terminal tab.
 
 ---
 
