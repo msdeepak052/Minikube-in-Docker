@@ -76,7 +76,7 @@ Verify:
 kubectl get nodes
 ```
 ---
-> ⚡ Quick note: Every time you restart your system, the Minikube cluster is not running automatically. You must run minikube start again to bring it up.
+> **⚡ Quick note: ** Every time you restart your system, the Minikube cluster is not running automatically. You must run minikube start again to bring it up.
 
 ---
 
