@@ -94,10 +94,19 @@ kubectl get nodes
 2. Add this at the bottom:
 
    ```bash
-   # Auto-start Minikube when WSL Ubuntu launches
-   if command -v minikube >/dev/null 2>&1; then
-       minikube status >/dev/null 2>&1 || minikube start --driver=docker
-   fi
+# Auto-start Minikube when WSL Ubuntu launches
+if command -v minikube >/dev/null 2>&1; then
+    # Check if a minikube profile already exists
+    if ! minikube profile list 2>/dev/null | grep -q minikube; then
+        echo "🚀 Creating a new Minikube cluster with Calico..."
+        minikube start --nodes=2 --cpus=4 --memory=8192 --driver=docker --cni=calico
+    elif ! minikube status >/dev/null 2>&1; then
+        echo "▶️  Starting existing Minikube cluster..."
+        minikube start
+    else
+        echo "✅ Minikube is already running."
+    fi
+fi
    ```
 
    > This will only start Minikube if it’s **not already running**.
