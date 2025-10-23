@@ -59,7 +59,13 @@ Now that WSL can use more resources, run:
 ```bash
 minikube delete  # optional clean start
 
-minikube start --nodes 2 --cpus 4 --memory 8192 --driver=docker --cni=calico
+minikube start --nodes 2 --cpus 4 --memory 8192 --driver=docker --cni=calico --addons=ingress
+
+or less memory
+
+minikube start --nodes 3 --cpus 2 --memory 4096 --driver=docker --cni=calico --addons=ingress
+
+
 ```
 
 If successful, verify:
